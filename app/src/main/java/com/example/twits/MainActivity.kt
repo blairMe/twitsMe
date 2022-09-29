@@ -2,7 +2,7 @@ package com.example.twits
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.twits.databinding.ActivityMainBinding
+import com.blair.twits.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
