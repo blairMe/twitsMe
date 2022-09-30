@@ -34,3 +34,5 @@
     </application>
 
 </manifest>
+
+<!--    android:theme="@style/Theme.Twits"-->
