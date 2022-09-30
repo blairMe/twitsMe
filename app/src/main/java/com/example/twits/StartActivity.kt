@@ -19,4 +19,5 @@ class StartActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_start)
         setupActionBarWithNavController(navController, null)
     }
+
 }

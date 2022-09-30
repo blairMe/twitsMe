@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/signinFragment"
         android:name="com.example.twits.SigninFragment"
-        android:label="SigninFragment" >
+        android:label="Twits">
         <action
             android:id="@+id/action_signinFragment_to_signupFragment"
             app:destination="@id/signupFragment" />
@@ -15,5 +15,9 @@
     <fragment
         android:id="@+id/signupFragment"
         android:name="com.example.twits.SignupFragment"
-        android:label="SignupFragment" />
+        android:label="Twits" >
+        <action
+            android:id="@+id/action_signupFragment_to_signinFragment"
+            app:destination="@id/signinFragment" />
+    </fragment>
 </navigation>

@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">Twits</string>
-    <string name="signin_title">Twits</string>
+    <string name="signin_title">Signin</string>
+    <string name="usernameEmailValue">Username/Email</string>
+    <string name="passwordValue">Password</string>
+    <string name="loginValue">Login</string>
+    <string name="account_text">Don\'t have an account yet?</string>
+    <string name="signup_login_button">Signup</string>
+    <string name="signup_welcome">Welcome to signup</string>
+    <string name="first_name_value">First Name</string>
+    <string name="second_name_value">Second Name</string>
+    <string name="email_value">Email</string>
+    <string name="confirm_password_value">Confirm Password</string>
+    <string name="signup_Value">Signup</string>
+    <string name="member_text">Already a member?</string>
+    <string name="signin_button">Signin</string>
 </resources>
