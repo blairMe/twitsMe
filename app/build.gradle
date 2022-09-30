@@ -50,4 +50,6 @@ dependencies {
     //Fragments
     def fragment_version = "1.5.3"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
+
+    api 'com.google.android.material:material:1.4.0-alpha01'
 }
