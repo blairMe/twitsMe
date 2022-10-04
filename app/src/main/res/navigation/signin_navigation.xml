@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/signin_navigation"
     app:startDestination="@id/signinFragment">
 
@@ -19,5 +20,13 @@
         <action
             android:id="@+id/action_signupFragment_to_signinFragment"
             app:destination="@id/signinFragment" />
+        <action
+            android:id="@+id/action_signupFragment_to_infoSettingFragment"
+            app:destination="@id/infoSettingFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/infoSettingFragment"
+        android:name="com.example.twits.InfoSettingFragment"
+        android:label="User Setup"
+        tools:layout="@layout/fragment_info_setting" />
 </navigation>
