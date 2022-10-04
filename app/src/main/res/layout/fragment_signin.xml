@@ -12,44 +12,55 @@
         android:orientation="vertical"
         android:focusableInTouchMode="true">
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:adjustViewBounds="true"
-        android:layout_marginTop="70dp"
-        android:src="@drawable/applogo"
-        />
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:layout_marginTop="70dp"
+            android:src="@drawable/applogo" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/signin_title"
-        android:textColor="@color/purple_200"
-        android:textSize="20sp"
-        android:layout_marginTop="11dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signin_title"
+            android:textColor="@color/purple_200"
+            android:textSize="20sp"
+            android:layout_marginTop="11dp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/usernameEmailValue"
-        app:boxBackgroundColor="@color/white"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="35dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email_signin"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/the_email_container"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:hint="@string/usernameEmailValue"
+            app:helperText="@string/required"
+            app:helperTextTextColor="@color/red"
+            app:boxBackgroundColor="@color/white"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="35dp">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_signin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:inputType="textEmailAddress"/>
 
-    <com.google.android.material.textfield.TextInputLayout
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/the_password_container"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/passwordValue"
+            app:helperText="@string/required"
+            app:helperTextTextColor="@color/red"
             app:boxBackgroundColor="@color/white"
+            app:counterEnabled="true"
+            app:counterMaxLength="12"
+            app:passwordToggleEnabled="true"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
             android:layout_marginTop="20dp">
@@ -58,7 +69,9 @@
                 android:id="@+id/password_signin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"/>
+                android:lines="1"
+                android:maxLength="12"
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,8 +84,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/loginValue"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:text="@string/account_text"
-                android:layout_marginEnd="5dp"/>
+                android:layout_marginEnd="5dp" />
 
             <TextView
                 android:id="@+id/signupButton"
@@ -97,7 +109,7 @@
                 android:textSize="15sp"
                 android:text="@string/signup_login_button"
                 android:textStyle="bold"
-                android:textColor="@color/purple_200"/>
+                android:textColor="@color/purple_200" />
 
         </LinearLayout>
 
