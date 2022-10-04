@@ -10,10 +10,13 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.blair.twits.R
 import com.blair.twits.databinding.FragmentSigninBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class SigninFragment : Fragment() {
 
     private lateinit var binding : FragmentSigninBinding
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

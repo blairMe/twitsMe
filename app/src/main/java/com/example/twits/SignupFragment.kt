@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.blair.twits.R
 import com.blair.twits.databinding.FragmentSignupBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class SignupFragment : Fragment() {
+
+    private lateinit var auth: FirebaseAuth
 
     private lateinit var binding: FragmentSignupBinding
 
@@ -33,6 +36,8 @@ class SignupFragment : Fragment() {
         binding.toSignin.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_signupFragment_to_signinFragment)
         }
+
+
 
     }
 
