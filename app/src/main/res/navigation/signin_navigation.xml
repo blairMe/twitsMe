@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/signinFragment"
-        android:name="com.example.twits.SigninFragment"
+        android:name="com.blair.twits.SigninFragment"
         android:label="Twits">
         <action
             android:id="@+id/action_signinFragment_to_signupFragment"
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.example.twits.SignupFragment"
+        android:name="com.blair.twits.SignupFragment"
         android:label="Twits" >
         <action
             android:id="@+id/action_signupFragment_to_signinFragment"
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/infoSettingFragment"
-        android:name="com.example.twits.InfoSettingFragment"
+        android:name="com.blair.twits.InfoSettingFragment"
         android:label="User Setup"
         tools:layout="@layout/fragment_info_setting" />
 </navigation>

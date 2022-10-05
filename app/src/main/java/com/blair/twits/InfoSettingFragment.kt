@@ -1,4 +1,4 @@
-package com.example.twits
+package com.blair.twits
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.blair.twits.R
 import com.blair.twits.databinding.FragmentInfoSettingBinding
 
 class InfoSettingFragment : Fragment() {

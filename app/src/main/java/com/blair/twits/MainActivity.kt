@@ -1,4 +1,4 @@
-package com.example.twits
+package com.blair.twits
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
