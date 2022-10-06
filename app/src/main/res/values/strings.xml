@@ -16,5 +16,7 @@
     <string name="signin_button">Signin</string>
     <string name="required">Required</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="user_information_title">Set up user information</string>
+    <string name="preferred_username">Set your preferred username</string>
 
 </resources>

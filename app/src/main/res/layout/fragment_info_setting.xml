@@ -1,19 +1,79 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-    <Button
-        android:id="@+id/i_navigate"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Move" />
+        android:orientation="vertical"
+        android:gravity="center"
+        android:focusableInTouchMode="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_information_title"
+            android:textColor="@color/purple_200"
+            android:textSize="20sp"
+            android:layout_marginTop="11dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/first_name_container"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/preferred_username"
+            app:helperText=""
+            app:helperTextTextColor="@color/red"
+            app:boxBackgroundColor="@color/white"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="15dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_first_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/pick_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tap to pick profile picture"
+            android:visibility="visible"
+            android:gravity="center"
+            android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:id="@+id/profile_picture"
+            android:layout_width="300dp"
+            android:layout_height="300dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp">
+        <Button
+            android:id="@+id/btn_finish"
+            android:layout_height="80dp"
+            android:layout_width="80dp"
+            android:background="@drawable/rounded_button"
+            />
+
+        </RelativeLayout>
+    </LinearLayout>
 
 
-</FrameLayout>
+</ScrollView>
