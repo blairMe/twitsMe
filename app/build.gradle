@@ -57,13 +57,17 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
 
     // Firebase Firestore
-    implementation platform('com.google.firebase:firebase-bom:30.5.0')
     implementation 'com.google.firebase:firebase-firestore-ktx'
+
+    // Firebase Storage
+    implementation 'com.google.firebase:firebase-storage-ktx'
 
     // Dexter - Permissions
     implementation 'com.karumi:dexter:6.2.3'
 
     // Coil - Image Loading
     implementation("io.coil-kt:coil:2.2.2")
+
+
 
 }

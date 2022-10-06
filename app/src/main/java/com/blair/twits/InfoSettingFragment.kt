@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.blair.twits.databinding.FragmentInfoSettingBinding
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -39,8 +41,13 @@ class InfoSettingFragment : Fragment() {
 
     private val packageName = "com.blair.twits"
 
+    private lateinit var selectedImage : Bitmap
+
     // The the user's information
     val currentUser = Firebase.auth.currentUser
+
+    // Firestore db
+    val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,11 +103,41 @@ class InfoSettingFragment : Fragment() {
                 }
 
                 currentUser?.let {
-                    val email = currentUser.email
-                    Toast.makeText(requireActivity(), email, Toast.LENGTH_SHORT).show()
+                    val email = currentUser.email.toString().trim()
+
+                    db.collection("users")
+                        .get()
+                        .addOnSuccessListener { result ->
+                            for (document in result) {
+                                val usedEmail = document.data["born"].toString().trim()
+                                val docName = document.id
+                                Log.i("UserEmail", usedEmail)
+                                updatingDetails(email, usedEmail, docName)
+                            }
+
+                        }
+                        .addOnFailureListener { exception ->
+                            Toast.makeText(requireActivity(), "Unsuccessful reaching firestore", Toast.LENGTH_SHORT).show()
+                        }
+
                 }
             }
 
+    }
+
+    private fun updatingDetails(email : String, usedEmail : String, docName : String) {
+
+        // Sending details to db
+        binding.profilePicture
+
+        if(email == usedEmail) {
+            val userName = binding.usenameInput.text.toString().trim()
+
+            db.collection("users").document(docName)
+                .update(mapOf(
+                    "setUniqueName" to userName
+                ))
+        }
     }
 
     private fun checkGalleryPermission() {
@@ -159,18 +196,19 @@ class InfoSettingFragment : Fragment() {
     private fun openCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, CAMERA_REQUEST_CODE)
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (resultCode == Activity.RESULT_OK) {
             when(requestCode) {
                 CAMERA_REQUEST_CODE -> {
-                    val imageBitmap = data?.extras?.get("data") as Bitmap
+                    //val imageBitmap = data?.extras?.get("data") as Bitmap
+                    selectedImage = data?.extras?.get("data") as Bitmap
 
                     // Display using Coil (Coroutine Image Loader)
-                    binding.profilePicture.load(imageBitmap){
+                    binding.profilePicture.load(selectedImage){
                         crossfade(true)
                         crossfade(1000)
                         transformations(CircleCropTransformation())
@@ -179,16 +217,14 @@ class InfoSettingFragment : Fragment() {
                 }
 
                 GALLERY_REQUEST_CODE -> {
-                    val image = data?.data
-                    binding.profilePicture.load(image) {
+                    selectedImage = data?.data as Bitmap
+                    binding.profilePicture.load(selectedImage) {
                         crossfade(true)
                         crossfade(1000)
                         transformations(CircleCropTransformation())
                     }
                 }
             }
-
-
         }
     }
 
