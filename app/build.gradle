@@ -60,4 +60,10 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:30.5.0')
     implementation 'com.google.firebase:firebase-firestore-ktx'
 
+    // Dexter - Permissions
+    implementation 'com.karumi:dexter:6.2.3'
+
+    // Coil - Image Loading
+    implementation("io.coil-kt:coil:2.2.2")
+
 }
