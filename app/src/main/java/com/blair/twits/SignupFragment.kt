@@ -180,7 +180,7 @@ class SignupFragment : Fragment() {
     // Validation
     private fun userDetailsFocusedListener() {
         binding.userFirstName.setOnFocusChangeListener { _, _ ->
-            val firstNameText = binding.userFirstName.text.toString()
+            val firstNameText = binding.userFirstName.text.toString().trim()
             if (!firstNameText.matches(".*[a-z].*".toRegex())) {
                 binding.firstNameContainer.helperText = "Must be characters"
             } else {
@@ -188,7 +188,7 @@ class SignupFragment : Fragment() {
             }
         }
         binding.userSecondName.setOnFocusChangeListener { _, _ ->
-            val secondNameText = binding.userSecondName.text.toString()
+            val secondNameText = binding.userSecondName.text.toString().trim()
             if (!secondNameText.matches(".*[a-z].*".toRegex())) {
                 binding.secondNameContainer.helperText = "Must be characters"
             } else {
@@ -196,7 +196,7 @@ class SignupFragment : Fragment() {
             }
         }
         binding.userEmail.setOnFocusChangeListener { _, _ ->
-            val emailText = binding.userEmail.text.toString()
+            val emailText = binding.userEmail.text.toString().trim()
             if (!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
                 binding.emailContainer.helperText = "Invalid email address"
             } else {
@@ -204,7 +204,7 @@ class SignupFragment : Fragment() {
             }
         }
         binding.userPassword.setOnFocusChangeListener { _, _ ->
-            val password = binding.userPassword.text.toString()
+            val password = binding.userPassword.text.toString().trim()
             if (password.length < 8) {
                 binding.passwordContainer.helperText = "Password must be at least 8 characters"
             } else if (!password.matches(".*[A-Z].*".toRegex())) {
@@ -221,7 +221,7 @@ class SignupFragment : Fragment() {
 //            }
         }
         binding.userPasswordConfirm.setOnFocusChangeListener { _, _ ->
-            val password = binding.userPasswordConfirm.text.toString()
+            val password = binding.userPasswordConfirm.text.toString().trim()
             if (password != binding.userPassword.text.toString()) {
                 binding.confirmPasswordContainer.helperText =
                     "Password must be equal to the above password"

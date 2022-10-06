@@ -2,6 +2,7 @@ package com.blair.twits
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
@@ -13,10 +14,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.blair.twits.databinding.FragmentInfoSettingBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -35,6 +39,9 @@ class InfoSettingFragment : Fragment() {
 
     private val packageName = "com.blair.twits"
 
+    // The the user's information
+    val currentUser = Firebase.auth.currentUser
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -50,6 +57,8 @@ class InfoSettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+            usernameFocusedListener()
+
             binding.rlSelectImg.setOnClickListener {
                 val pictureDialog = AlertDialog.Builder(requireActivity())
                 pictureDialog.setTitle("Select Action")
@@ -61,6 +70,35 @@ class InfoSettingFragment : Fragment() {
                     }
                 }
                 pictureDialog.show()
+                binding.pickPicture.visibility = View.GONE
+            }
+
+            binding.btnProceed.setOnClickListener {
+                // Checking that the user details are valid
+                val userNameValue = binding.usenameInput.text.toString().trim()
+
+                if (userNameValue.isEmpty()) {
+                    android.app.AlertDialog.Builder(requireActivity())
+                        .setTitle("Invalid")
+                        .setMessage("Please enter a value in the username.")
+                        .setPositiveButton("Okay") { _, _ ->
+                            // Nothing
+                        }
+                        .show()
+                } else if (!userNameValue.matches(".*[a-z].*".toRegex())) {
+                    android.app.AlertDialog.Builder(requireActivity())
+                        .setTitle("Invalid")
+                        .setMessage("Please enter a valid value.")
+                        .setPositiveButton("Okay") { _, _ ->
+                            // Nothing
+                        }
+                        .show()
+                }
+
+                currentUser?.let {
+                    val email = currentUser.email
+                    Toast.makeText(requireActivity(), email, Toast.LENGTH_SHORT).show()
+                }
             }
 
     }
@@ -141,7 +179,8 @@ class InfoSettingFragment : Fragment() {
                 }
 
                 GALLERY_REQUEST_CODE -> {
-                    binding.profilePicture.load(data?.data) {
+                    val image = data?.data
+                    binding.profilePicture.load(image) {
                         crossfade(true)
                         crossfade(1000)
                         transformations(CircleCropTransformation())
@@ -170,6 +209,19 @@ class InfoSettingFragment : Fragment() {
             .setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
             }.show()
+    }
+
+
+    // Username validation
+    fun usernameFocusedListener() {
+        binding.usenameInput.setOnFocusChangeListener { _, _ ->
+            val newUserName = binding.usenameInput.text.toString().trim()
+            if (!newUserName.matches(".*[a-z].*".toRegex())) {
+                binding.usernameContainer.helperText = "Username can be letters of numbers"
+            } else {
+                binding.usernameContainer.helperText = null
+            }
+        }
     }
 }
 
