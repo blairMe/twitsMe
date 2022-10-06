@@ -20,7 +20,7 @@
             android:layout_marginTop="11dp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/first_name_container"
+            android:id="@+id/username_container"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             android:layout_marginTop="15dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/user_first_name"
+                android:id="@+id/usename_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="1"
@@ -42,6 +42,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_select_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp">
@@ -50,7 +51,7 @@
             android:id="@+id/pick_picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tap to pick profile picture"
+            android:text="@string/tap_for_profile_picture"
             android:visibility="visible"
             android:gravity="center"
             android:layout_centerInParent="true"/>
@@ -58,21 +59,18 @@
         <ImageView
             android:id="@+id/profile_picture"
             android:layout_width="300dp"
-            android:layout_height="300dp"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp">
-        <Button
-            android:id="@+id/btn_finish"
-            android:layout_height="80dp"
-            android:layout_width="80dp"
-            android:background="@drawable/rounded_button"
+            android:layout_height="300dp"
             />
-
         </RelativeLayout>
+
+        <ImageView
+                android:id="@+id/btn_proceed"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/rounded_button"
+                android:src="@drawable/ic_forward"
+                />
     </LinearLayout>
 
 

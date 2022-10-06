@@ -25,16 +25,21 @@ class InfoSettingFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        binding.iNavigate.setOnClickListener {
-//            val intent = Intent(activity, MainActivity::class.java)
-//                        startActivity(intent)
-//        }
 
 
     }
 
 }
+
+
+
+
+
+
+//        binding.iNavigate.setOnClickListener {
+//            val intent = Intent(activity, MainActivity::class.java)
+//                        startActivity(intent)
+//        }

@@ -30,8 +30,12 @@ class SigninFragment : Fragment() {
         // Check if user is signed in
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            val intent = Intent(activity, MainActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(activity, MainActivity::class.java)
+//            startActivity(intent)
+            view?.let {
+                Navigation.findNavController(it)
+                    .navigate(R.id.action_signinFragment_to_infoSettingFragment)
+            }
         }
     }
 
