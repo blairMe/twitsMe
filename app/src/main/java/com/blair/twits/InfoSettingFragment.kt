@@ -4,12 +4,16 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Picture
 import android.graphics.drawable.BitmapDrawable
+import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.OpenableColumns
 import android.provider.Settings
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,6 +21,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -24,7 +29,7 @@ import com.blair.twits.databinding.FragmentInfoSettingBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-//import com.google.firebase.storage.ktx.storage
+import com.google.firebase.storage.ktx.storage
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -54,6 +59,8 @@ class InfoSettingFragment : Fragment() {
 
     // Firebase Storage
     //val storage = Firebase.storage("gs://twits-2518e.appspot.com/profilePictures")
+    val storage = Firebase.storage
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -137,7 +144,24 @@ class InfoSettingFragment : Fragment() {
         if(email == usedEmail) {
             val userName = binding.usenameInput.text.toString().trim()
 
+            val storageRef = storage.reference
 
+            val mountainImagesRef = storageRef.child("profilePictures/")
+            // Get the data from an ImageView as bytes
+            binding.profilePicture.isDrawingCacheEnabled = true
+            binding.profilePicture.buildDrawingCache()
+            val bitmap = (binding.profilePicture as BitmapDrawable).bitmap
+            val baos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val data = baos.toByteArray()
+
+            val uploadTask = mountainImagesRef.putBytes(data)
+            uploadTask.addOnFailureListener {
+                // Handle unsuccessful uploads
+            }.addOnSuccessListener { taskSnapshot ->
+                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+                // ...
+            }
 
             db.collection("users").document(docName)
                 .update(mapOf(
@@ -223,11 +247,15 @@ class InfoSettingFragment : Fragment() {
                 }
 
                 GALLERY_REQUEST_CODE -> {
-                    selectedImage = data?.data as Bitmap
+                    val selectedImage = data?.data
                     binding.profilePicture.load(selectedImage) {
                         crossfade(true)
                         crossfade(1000)
                         transformations(CircleCropTransformation())
+                    }
+
+                    binding.btnProceed.setOnClickListener {
+                        Toast.makeText(requireActivity(), "Clicked", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
