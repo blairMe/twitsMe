@@ -171,7 +171,7 @@ class InfoSettingFragment : Fragment() {
                         val imageUri = task.result
                         Log.i("Your URL", "$imageUri")
 
-                        // send username and profile picture url to firestore
+                        // Send username and profile picture url to firestore
                         db.collection("users").document(docName)
                             .update(hashMapOf(
                                 "setUserName" to userName,
@@ -186,23 +186,6 @@ class InfoSettingFragment : Fragment() {
                     }
                 }
             }
-
-            // Getting the uploaded file url
-
-
-            //"profileImageUrl" to urlTask
-
-//            db.collection("users").document(docName)
-//                .update(hashMapOf(
-//                    "setUserName" to userName,
-//
-//                ) as Map<String, Any>)
-//                .addOnSuccessListener {
-//
-//                    // If successful, start MainActivity
-//                    val intent = Intent(activity, MainActivity::class.java)
-//                    startActivity(intent)
-//                }
         }
 
     }
@@ -348,7 +331,7 @@ class InfoSettingFragment : Fragment() {
         binding.usenameInput.setOnFocusChangeListener { _, _ ->
             val newUserName = binding.usenameInput.text.toString().trim()
             if (!newUserName.matches(".*[a-z].*".toRegex())) {
-                binding.usernameContainer.helperText = "Username can be letters of numbers"
+                binding.usernameContainer.helperText = "Username can be letters or numbers"
             } else {
                 binding.usernameContainer.helperText = null
             }
@@ -374,13 +357,3 @@ class InfoSettingFragment : Fragment() {
 
     }
 }
-
-
-
-
-
-
-//        binding.iNavigate.setOnClickListener {
-//            val intent = Intent(activity, MainActivity::class.java)
-//                        startActivity(intent)
-//        }
