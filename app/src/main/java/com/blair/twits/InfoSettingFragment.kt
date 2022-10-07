@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -23,6 +24,7 @@ import com.blair.twits.databinding.FragmentInfoSettingBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+//import com.google.firebase.storage.ktx.storage
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -31,6 +33,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
+import java.io.ByteArrayOutputStream
 
 class InfoSettingFragment : Fragment() {
 
@@ -48,6 +51,10 @@ class InfoSettingFragment : Fragment() {
 
     // Firestore db
     val db = Firebase.firestore
+
+    // Firebase Storage
+    //val storage = Firebase.storage("gs://twits-2518e.appspot.com/profilePictures")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,7 +123,7 @@ class InfoSettingFragment : Fragment() {
                             }
 
                         }
-                        .addOnFailureListener { exception ->
+                        .addOnFailureListener { _ ->
                             Toast.makeText(requireActivity(), "Unsuccessful reaching firestore", Toast.LENGTH_SHORT).show()
                         }
 
@@ -127,11 +134,10 @@ class InfoSettingFragment : Fragment() {
 
     private fun updatingDetails(email : String, usedEmail : String, docName : String) {
 
-        // Sending details to db
-        binding.profilePicture
-
         if(email == usedEmail) {
             val userName = binding.usenameInput.text.toString().trim()
+
+
 
             db.collection("users").document(docName)
                 .update(mapOf(
@@ -246,7 +252,6 @@ class InfoSettingFragment : Fragment() {
                 dialog.dismiss()
             }.show()
     }
-
 
     // Username validation
     fun usernameFocusedListener() {
