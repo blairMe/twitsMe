@@ -164,26 +164,6 @@ class InfoSettingFragment : Fragment() {
                 // ...
             }
 
-
-//            val storageRef = storage.reference
-//
-//            val mountainImagesRef = storageRef.child("profilePictures/")
-//            // Get the data from an ImageView as bytes
-//            binding.profilePicture.isDrawingCacheEnabled = true
-//            binding.profilePicture.buildDrawingCache()
-//            val bitmap = (binding.profilePicture as BitmapDrawable).bitmap
-//            val baos = ByteArrayOutputStream()
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-//            val data = baos.toByteArray()
-//
-//            val uploadTask = mountainImagesRef.putBytes(data)
-//            uploadTask.addOnFailureListener {
-//                // Handle unsuccessful uploads
-//            }.addOnSuccessListener { taskSnapshot ->
-//                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-//                // ...
-//            }
-
             db.collection("users").document(docName)
                 .update(mapOf(
                     "setUniqueName" to userName
@@ -266,8 +246,6 @@ class InfoSettingFragment : Fragment() {
                         crossfade(1000)
                         transformations(CircleCropTransformation())
                     }
-
-
                 }
 
                 GALLERY_REQUEST_CODE -> {
