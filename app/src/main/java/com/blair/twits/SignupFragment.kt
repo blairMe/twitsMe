@@ -120,10 +120,10 @@ class SignupFragment : Fragment() {
     }
 
     private fun signupUser() {
-        val firstName = binding.userFirstName.text.toString()
-        val secondName = binding.userSecondName.text.toString()
-        val email = binding.userEmail.text.toString()
-        val password = binding.userPassword.text.toString()
+        val firstName = binding.userFirstName.text.toString().trim()
+        val secondName = binding.userSecondName.text.toString().trim()
+        val email = binding.userEmail.text.toString().trim()
+        val password = binding.userPassword.text.toString().trim()
 
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
@@ -133,7 +133,7 @@ class SignupFragment : Fragment() {
                         requireActivity(), "Successful signing up",
                         Toast.LENGTH_SHORT
                     ).show()
-                    sendDataToFireStore(firstName, secondName, email, password)
+                    sendDataToFireStore(firstName, secondName, email)
                     view?.let { it1 ->
                         Navigation.findNavController(it1)
                             .navigate(R.id.action_signupFragment_to_infoSettingFragment)
@@ -154,8 +154,7 @@ class SignupFragment : Fragment() {
     private fun sendDataToFireStore(
         firstName: String,
         secondName: String,
-        email: String,
-        password: String,
+        email: String
     ) {
         // Capture the user information
         val userInfo = hashMapOf(

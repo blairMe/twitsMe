@@ -119,7 +119,7 @@ class InfoSettingFragment : Fragment() {
                             // Nothing
                         }
                         .show()
-                } else {
+                }
                     currentUser?.let {
                         val email = currentUser.email.toString().trim()
 
@@ -127,15 +127,11 @@ class InfoSettingFragment : Fragment() {
                             .get()
                             .addOnSuccessListener { result ->
                                 for (document in result) {
-                                    val usedEmail = document.data["born"].toString().trim()
+                                    val usedEmail = document.data["userEmail"].toString().trim()
                                     val docName = document.id
                                     Log.i("UserEmail", usedEmail)
                                     updatingDetails(email, usedEmail, docName)
                                 }
-
-                                // If successful, start MainActivity
-                                val intent = Intent(activity, MainActivity::class.java)
-                                startActivity(intent)
                             }
                             .addOnFailureListener { _ ->
                                 Toast.makeText(requireActivity(), "Unsuccessful reaching firestore", Toast.LENGTH_SHORT).show()
@@ -143,9 +139,6 @@ class InfoSettingFragment : Fragment() {
 
                     }
                 }
-            }
-
-
     }
 
     private fun updatingDetails(email : String, usedEmail : String, docName : String) {
@@ -160,29 +153,56 @@ class InfoSettingFragment : Fragment() {
             val profileImageRef = storageRef.child("profilePictures/${file.lastPathSegment}")
             var uploadTask = profileImageRef.putFile(file)
 
-            // Getting the uploaded file url
-            val urlTask = uploadTask.continueWithTask { task ->
-                if (!task.isSuccessful) {
-                    task.exception?.let {
-                        throw it
+            // Register observers to listen for when the download is done or if it fails
+            uploadTask.addOnFailureListener {
+                // Handle unsuccessful uploads
+            }.addOnSuccessListener { _ ->
+
+                // Get profile picture URL
+                uploadTask.continueWithTask { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
+                        }
                     }
-                }
-                profileImageRef.downloadUrl
-            }.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val imageUri = task.result
-                    Log.i("Your URL", "$imageUri")
-                } else {
-                    Log.e("Failed URL", "Can't get the URL")
-                    //Handle failures
+                    profileImageRef.downloadUrl
+                }.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val imageUri = task.result
+                        Log.i("Your URL", "$imageUri")
+
+                        // send username and profile picture url to firestore
+                        db.collection("users").document(docName)
+                            .update(hashMapOf(
+                                "setUserName" to userName,
+                                "profileImageUrl" to imageUri.toString().trim()
+                                ) as Map<String, Any>)
+
+                        // Start main activity
+                        val intent = Intent(activity, MainActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        Log.e("Failed URL", "Can't get the URL")
+                    }
                 }
             }
 
-            db.collection("users").document(docName)
-                .update(mapOf(
-                    "setUserName" to userName,
-                    "imageUrl" to urlTask.toString()
-                ))
+            // Getting the uploaded file url
+
+
+            //"profileImageUrl" to urlTask
+
+//            db.collection("users").document(docName)
+//                .update(hashMapOf(
+//                    "setUserName" to userName,
+//
+//                ) as Map<String, Any>)
+//                .addOnSuccessListener {
+//
+//                    // If successful, start MainActivity
+//                    val intent = Intent(activity, MainActivity::class.java)
+//                    startActivity(intent)
+//                }
         }
 
     }
