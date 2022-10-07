@@ -38,12 +38,12 @@ class SignupFragment : Fragment() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if (currentUser != null) {
-//            val intent = Intent(activity, MainActivity::class.java)
-//            startActivity(intent)
-            view?.let {
-                Navigation.findNavController(it)
-                    .navigate(R.id.action_signupFragment_to_infoSettingFragment)
-            }
+            val intent = Intent(activity, MainActivity::class.java)
+            startActivity(intent)
+//            view?.let {
+//                Navigation.findNavController(it)
+//                    .navigate(R.id.action_signupFragment_to_infoSettingFragment)
+//            }
         }
     }
 
@@ -130,7 +130,7 @@ class SignupFragment : Fragment() {
                 if (task.isSuccessful) {
                     // Successful signup
                     Toast.makeText(
-                        requireActivity(), "Successful signing in",
+                        requireActivity(), "Successful signing up",
                         Toast.LENGTH_SHORT
                     ).show()
                     sendDataToFireStore(firstName, secondName, email, password)
@@ -159,10 +159,9 @@ class SignupFragment : Fragment() {
     ) {
         // Capture the user information
         val userInfo = hashMapOf(
-            "first" to firstName,
-            "last" to secondName,
-            "born" to email,
-            "password" to password
+            "firstName" to firstName,
+            "lastName" to secondName,
+            "userEmail" to email
         )
 
         db.collection("users")

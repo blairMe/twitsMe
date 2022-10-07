@@ -119,28 +119,32 @@ class InfoSettingFragment : Fragment() {
                             // Nothing
                         }
                         .show()
-                }
+                } else {
+                    currentUser?.let {
+                        val email = currentUser.email.toString().trim()
 
-                currentUser?.let {
-                    val email = currentUser.email.toString().trim()
+                        db.collection("users")
+                            .get()
+                            .addOnSuccessListener { result ->
+                                for (document in result) {
+                                    val usedEmail = document.data["born"].toString().trim()
+                                    val docName = document.id
+                                    Log.i("UserEmail", usedEmail)
+                                    updatingDetails(email, usedEmail, docName)
+                                }
 
-                    db.collection("users")
-                        .get()
-                        .addOnSuccessListener { result ->
-                            for (document in result) {
-                                val usedEmail = document.data["born"].toString().trim()
-                                val docName = document.id
-                                Log.i("UserEmail", usedEmail)
-                                updatingDetails(email, usedEmail, docName)
+                                // If successful, start MainActivity
+                                val intent = Intent(activity, MainActivity::class.java)
+                                startActivity(intent)
+                            }
+                            .addOnFailureListener { _ ->
+                                Toast.makeText(requireActivity(), "Unsuccessful reaching firestore", Toast.LENGTH_SHORT).show()
                             }
 
-                        }
-                        .addOnFailureListener { _ ->
-                            Toast.makeText(requireActivity(), "Unsuccessful reaching firestore", Toast.LENGTH_SHORT).show()
-                        }
-
+                    }
                 }
             }
+
 
     }
 
@@ -153,22 +157,34 @@ class InfoSettingFragment : Fragment() {
             val storageRef = storage.reference
 
             var file = Uri.fromFile(File("$imagePath"))
-            val riversRef = storageRef.child("profilePictures/${file.lastPathSegment}")
-            var uploadTask = riversRef.putFile(file)
+            val profileImageRef = storageRef.child("profilePictures/${file.lastPathSegment}")
+            var uploadTask = profileImageRef.putFile(file)
 
-            // Register observers to listen for when the download is done or if it fails
-            uploadTask.addOnFailureListener {
-                // Handle unsuccessful uploads
-            }.addOnSuccessListener { taskSnapshot ->
-                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-                // ...
+            // Getting the uploaded file url
+            val urlTask = uploadTask.continueWithTask { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+                profileImageRef.downloadUrl
+            }.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val imageUri = task.result
+                    Log.i("Your URL", "$imageUri")
+                } else {
+                    Log.e("Failed URL", "Can't get the URL")
+                    //Handle failures
+                }
             }
 
             db.collection("users").document(docName)
                 .update(mapOf(
-                    "setUniqueName" to userName
+                    "setUserName" to userName,
+                    "imageUrl" to urlTask.toString()
                 ))
         }
+
     }
 
     private fun checkGalleryPermission() {
@@ -308,7 +324,7 @@ class InfoSettingFragment : Fragment() {
     }
 
     // Username validation
-    fun usernameFocusedListener() {
+    private fun usernameFocusedListener() {
         binding.usenameInput.setOnFocusChangeListener { _, _ ->
             val newUserName = binding.usenameInput.text.toString().trim()
             if (!newUserName.matches(".*[a-z].*".toRegex())) {
@@ -319,7 +335,7 @@ class InfoSettingFragment : Fragment() {
         }
     }
 
-    fun saveImageToInternalStorage(bitmap: Bitmap) : String {
+    private fun saveImageToInternalStorage(bitmap: Bitmap) : String {
         val wrapper = ContextWrapper(requireActivity().applicationContext)
 
         var file = wrapper.getDir(IMAGE_DIRECTORY, Activity.MODE_PRIVATE)

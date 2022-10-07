@@ -31,10 +31,13 @@ class SigninFragment : Fragment() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
 
-            view?.let {
-                Navigation.findNavController(it)
-                    .navigate(R.id.action_signinFragment_to_infoSettingFragment)
-            }
+            val intent = Intent(activity, MainActivity::class.java)
+            startActivity(intent)
+
+//            view?.let {
+//                Navigation.findNavController(it)
+//                    .navigate(R.id.action_signinFragment_to_infoSettingFragment)
+//            }
         }
     }
 
@@ -140,6 +143,3 @@ class SigninFragment : Fragment() {
     }
 
 }
-
-//            val intent = Intent(activity, MainActivity::class.java)
-//            startActivity(intent)
