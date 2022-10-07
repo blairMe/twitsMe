@@ -5,8 +5,10 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Picture
 import android.graphics.drawable.BitmapDrawable
 import android.media.Image
@@ -38,7 +40,8 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
-import java.io.ByteArrayOutputStream
+import java.io.*
+import java.util.*
 
 class InfoSettingFragment : Fragment() {
 
@@ -61,7 +64,9 @@ class InfoSettingFragment : Fragment() {
     //val storage = Firebase.storage("gs://twits-2518e.appspot.com/profilePictures")
     val storage = Firebase.storage
 
-
+    // Image storage
+    private val IMAGE_DIRECTORY = "twitsImages"
+    private var imagePath = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -144,24 +149,40 @@ class InfoSettingFragment : Fragment() {
         if(email == usedEmail) {
             val userName = binding.usenameInput.text.toString().trim()
 
+            // Upload the image
             val storageRef = storage.reference
 
-            val mountainImagesRef = storageRef.child("profilePictures/")
-            // Get the data from an ImageView as bytes
-            binding.profilePicture.isDrawingCacheEnabled = true
-            binding.profilePicture.buildDrawingCache()
-            val bitmap = (binding.profilePicture as BitmapDrawable).bitmap
-            val baos = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-            val data = baos.toByteArray()
+            var file = Uri.fromFile(File("$imagePath"))
+            val riversRef = storageRef.child("profilePictures/${file.lastPathSegment}")
+            var uploadTask = riversRef.putFile(file)
 
-            val uploadTask = mountainImagesRef.putBytes(data)
+            // Register observers to listen for when the download is done or if it fails
             uploadTask.addOnFailureListener {
                 // Handle unsuccessful uploads
             }.addOnSuccessListener { taskSnapshot ->
                 // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
                 // ...
             }
+
+
+//            val storageRef = storage.reference
+//
+//            val mountainImagesRef = storageRef.child("profilePictures/")
+//            // Get the data from an ImageView as bytes
+//            binding.profilePicture.isDrawingCacheEnabled = true
+//            binding.profilePicture.buildDrawingCache()
+//            val bitmap = (binding.profilePicture as BitmapDrawable).bitmap
+//            val baos = ByteArrayOutputStream()
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+//            val data = baos.toByteArray()
+//
+//            val uploadTask = mountainImagesRef.putBytes(data)
+//            uploadTask.addOnFailureListener {
+//                // Handle unsuccessful uploads
+//            }.addOnSuccessListener { taskSnapshot ->
+//                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+//                // ...
+//            }
 
             db.collection("users").document(docName)
                 .update(mapOf(
@@ -234,8 +255,10 @@ class InfoSettingFragment : Fragment() {
         if (resultCode == Activity.RESULT_OK) {
             when(requestCode) {
                 CAMERA_REQUEST_CODE -> {
-                    //val imageBitmap = data?.extras?.get("data") as Bitmap
-                    selectedImage = data?.extras?.get("data") as Bitmap
+                    val selectedImage = data?.extras?.get("data") as Bitmap
+
+                    // Save image to internal storage
+                    imagePath = saveImageToInternalStorage(selectedImage)
 
                     // Display using Coil (Coroutine Image Loader)
                     binding.profilePicture.load(selectedImage){
@@ -244,18 +267,43 @@ class InfoSettingFragment : Fragment() {
                         transformations(CircleCropTransformation())
                     }
 
+
                 }
 
                 GALLERY_REQUEST_CODE -> {
                     val selectedImage = data?.data
+
+                    // Display using Coil (Coroutine Image Loader)
                     binding.profilePicture.load(selectedImage) {
                         crossfade(true)
                         crossfade(1000)
                         transformations(CircleCropTransformation())
                     }
 
-                    binding.btnProceed.setOnClickListener {
-                        Toast.makeText(requireActivity(), "Clicked", Toast.LENGTH_SHORT).show()
+                    // Convert data to bitmap
+                    if (data != null && data.data != null) {
+                        val uri = data.data!!
+                        val inputStream = requireContext().contentResolver.openInputStream(uri)
+                        val cursor = requireContext().contentResolver.query(uri, null, null, null, null)
+                        cursor?.use { c ->
+                            val nameIndex = c.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                            if (c.moveToFirst()) {
+                                val name = c.getString(nameIndex)
+                                inputStream?.let { inputStream ->
+                                    // create same file with same name
+                                    val file = File(requireContext().cacheDir, name)
+                                    val os = file.outputStream()
+                                    os.use {
+                                        inputStream.copyTo(it)
+                                    }
+                                    val bitmap = BitmapFactory.decodeFile(file.absolutePath)
+
+                                    // Save image to internal storage
+                                    imagePath = saveImageToInternalStorage(bitmap)
+                                    Log.i("Image path", imagePath)
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -291,6 +339,25 @@ class InfoSettingFragment : Fragment() {
                 binding.usernameContainer.helperText = null
             }
         }
+    }
+
+    fun saveImageToInternalStorage(bitmap: Bitmap) : String {
+        val wrapper = ContextWrapper(requireActivity().applicationContext)
+
+        var file = wrapper.getDir(IMAGE_DIRECTORY, Activity.MODE_PRIVATE)
+        file = File(file, "${UUID.randomUUID()}.jpg")
+
+        try {
+            val stream : OutputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            stream.flush()
+            stream.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        return  file.absolutePath
+
     }
 }
 

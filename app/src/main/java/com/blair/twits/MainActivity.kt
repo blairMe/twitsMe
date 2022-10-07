@@ -1,8 +1,16 @@
 package com.blair.twits
 
+import android.app.Activity
+import android.content.ContextWrapper
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.blair.twits.databinding.ActivityMainBinding
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,4 +24,5 @@ class MainActivity : AppCompatActivity() {
         var theButton = binding.firstText
         theButton.text = "Bye Hello"
     }
+
 }
