@@ -14,4 +14,8 @@
         <item name="android:statusBarColor">@color/purple_700</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="ProgressBar">
+        <item name="colorSecondary">@color/teal_200</item>
+    </style>
 </resources>

@@ -1,5 +1,6 @@
 package com.blair.twits
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
@@ -85,6 +86,9 @@ class SigninFragment : Fragment() {
                     .show()
             } else {
                 signinUser()
+                val dialog = Dialog(requireActivity())
+                dialog.setContentView(R.layout.loader_dialog)
+                dialog.show()
             }
         }
     }

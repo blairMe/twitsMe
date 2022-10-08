@@ -131,12 +131,13 @@ class InfoSettingFragment : Fragment() {
                                     val docName = document.id
                                     Log.i("UserEmail", usedEmail)
                                     updatingDetails(email, usedEmail, docName)
+
+
                                 }
                             }
                             .addOnFailureListener { _ ->
                                 Toast.makeText(requireActivity(), "Unsuccessful reaching firestore", Toast.LENGTH_SHORT).show()
                             }
-
                     }
                 }
     }
