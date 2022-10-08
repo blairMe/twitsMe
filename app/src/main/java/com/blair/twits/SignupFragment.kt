@@ -115,9 +115,6 @@ class SignupFragment : Fragment() {
                     .show()
             } else {
                 signupUser()
-                val dialog = Dialog(requireActivity())
-                dialog.setContentView(R.layout.loader_dialog)
-                dialog.show()
             }
         }
 
@@ -128,6 +125,11 @@ class SignupFragment : Fragment() {
         val secondName = binding.userSecondName.text.toString().trim()
         val email = binding.userEmail.text.toString().trim()
         val password = binding.userPassword.text.toString().trim()
+
+        // Display dialog box
+        val dialog = Dialog(requireActivity())
+        dialog.setContentView(R.layout.loader_dialog)
+        dialog.show()
 
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
@@ -141,6 +143,8 @@ class SignupFragment : Fragment() {
                     view?.let { it1 ->
                         Navigation.findNavController(it1)
                             .navigate(R.id.action_signupFragment_to_infoSettingFragment)
+
+                        dialog.dismiss()
                     }
 //                        val intent = Intent(activity, MainActivity::class.java)
 //                        startActivity(intent)
@@ -242,4 +246,6 @@ class SignupFragment : Fragment() {
         }
 
     }
+
+
 }

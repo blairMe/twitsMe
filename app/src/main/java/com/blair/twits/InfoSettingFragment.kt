@@ -132,7 +132,8 @@ class InfoSettingFragment : Fragment() {
                                     Log.i("UserEmail", usedEmail)
                                     updatingDetails(email, usedEmail, docName)
 
-
+                                    // Display loading
+                                    binding.loadingIcon.visibility = View.VISIBLE
                                 }
                             }
                             .addOnFailureListener { _ ->
