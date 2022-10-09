@@ -25,6 +25,9 @@ class SignupFragment : Fragment() {
 
     private val db = Firebase.firestore
 
+    // Loading Dialog
+    private var progressDialog : Dialog? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -126,10 +129,8 @@ class SignupFragment : Fragment() {
         val email = binding.userEmail.text.toString().trim()
         val password = binding.userPassword.text.toString().trim()
 
-        // Display dialog box
-        val dialog = Dialog(requireActivity())
-        dialog.setContentView(R.layout.loader_dialog)
-        dialog.show()
+        // Show the loading dialog
+        showProgressDialog()
 
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
@@ -144,7 +145,8 @@ class SignupFragment : Fragment() {
                         Navigation.findNavController(it1)
                             .navigate(R.id.action_signupFragment_to_infoSettingFragment)
 
-                        dialog.dismiss()
+                        // Dismiss loading dialog
+                        hideProgressDialog()
                     }
 //                        val intent = Intent(activity, MainActivity::class.java)
 //                        startActivity(intent)
@@ -157,7 +159,6 @@ class SignupFragment : Fragment() {
                 }
             }
     }
-
 
     private fun sendDataToFireStore(
         firstName: String,
@@ -244,7 +245,20 @@ class SignupFragment : Fragment() {
                 binding.confirmPasswordContainer.helperText = null
             }
         }
+    }
 
+    private fun showProgressDialog() {
+        progressDialog = Dialog(requireActivity())
+        progressDialog?.let {
+            it.setContentView(R.layout.loader_dialog)
+            it.show()
+        }
+    }
+
+    private fun hideProgressDialog() {
+        progressDialog?.let {
+            it.dismiss()
+        }
     }
 
 

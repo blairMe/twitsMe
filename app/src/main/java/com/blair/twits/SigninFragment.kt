@@ -22,6 +22,10 @@ class SigninFragment : Fragment() {
 
     private var auth: FirebaseAuth = Firebase.auth
 
+    // Loading dialog
+    private var progressDialog : Dialog? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -86,9 +90,9 @@ class SigninFragment : Fragment() {
                     .show()
             } else {
                 signinUser()
-                val dialog = Dialog(requireActivity())
-                dialog.setContentView(R.layout.loader_dialog)
-                dialog.show()
+
+                // Show loading dialog
+                showProgressDialog()
             }
         }
     }
@@ -104,6 +108,9 @@ class SigninFragment : Fragment() {
                     // Signin success
                     val intent = Intent(activity, MainActivity::class.java)
                     startActivity(intent)
+
+                    // Dismiss loading dialog
+                    hideProgressDialog()
                 } else {
                     // Signin fails
                     Toast.makeText(requireActivity(), "Couldn't signin",
@@ -138,6 +145,20 @@ class SigninFragment : Fragment() {
 //            else if(!password.matches(".*[@*/$].*".toRegex())) {
 //                binding.thePasswordContainer.helperText = "Password must contain at least on symbol"
 //            }
+        }
+    }
+
+    private fun showProgressDialog() {
+        progressDialog = Dialog(requireActivity())
+        progressDialog?.let {
+            it.setContentView(R.layout.loader_dialog)
+            it.show()
+        }
+    }
+
+    private fun hideProgressDialog() {
+        progressDialog?.let {
+            it.dismiss()
         }
     }
 
