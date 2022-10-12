@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.blair.twits.ui.fragments.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_postTwitFragment"
+            app:destination="@id/postTwitFragment" />
+    </fragment>
     <fragment
         android:id="@+id/postTwitFragment"
         android:name="com.blair.twits.ui.fragments.PostTwitFragment"
