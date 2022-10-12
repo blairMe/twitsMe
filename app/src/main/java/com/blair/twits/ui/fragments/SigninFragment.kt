@@ -1,4 +1,4 @@
-package com.blair.twits
+package com.blair.twits.ui.fragments
 
 import android.app.Dialog
 import android.content.Intent
@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.Navigation
+import com.blair.twits.ui.activities.MainActivity
+import com.blair.twits.R
 import com.blair.twits.databinding.FragmentSigninBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

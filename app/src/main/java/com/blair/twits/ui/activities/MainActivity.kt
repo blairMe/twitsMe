@@ -1,4 +1,4 @@
-package com.blair.twits
+package com.blair.twits.ui.activities
 
 import android.app.Activity
 import android.content.ContextWrapper
