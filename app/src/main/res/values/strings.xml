@@ -19,5 +19,6 @@
     <string name="user_information_title">Set up user information</string>
     <string name="preferred_username">Set your preferred username</string>
     <string name="tap_for_profile_picture">Tap to here to pick profile picture</string>
+    <string name="whats_on_your_mind">What\'s on your mind?</string>
 
 </resources>
