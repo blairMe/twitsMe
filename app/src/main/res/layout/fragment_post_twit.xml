@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_attach_photo"
                 android:layout_alignParentLeft="true"
-                android:background="@color/purple_500"
+                android:backgroundTint="@color/purple_500"
                 android:padding="15dp"/>
 
             <Button
@@ -54,8 +54,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Post"
+                android:backgroundTint="@color/purple_500"
                 android:textColor="@color/white"
-                android:background="@color/purple_500"
                 android:textAllCaps="false"
                 android:layout_alignParentEnd="true" />
 

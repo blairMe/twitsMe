@@ -46,16 +46,15 @@ class InfoSettingFragment : Fragment() {
 
     private val packageName = "com.blair.twits"
 
-    private lateinit var selectedImage : Bitmap
+    //private lateinit var selectedImage : Bitmap
 
-    // The the user's information
+    // The current user's information
     val currentUser = Firebase.auth.currentUser
 
     // Firestore db
     val db = Firebase.firestore
 
     // Firebase Storage
-    //val storage = Firebase.storage("gs://twits-2518e.appspot.com/profilePictures")
     val storage = Firebase.storage
 
     // Image storage
@@ -350,6 +349,5 @@ class InfoSettingFragment : Fragment() {
         }
 
         return  file.absolutePath
-
     }
 }
