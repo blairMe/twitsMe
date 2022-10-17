@@ -18,8 +18,10 @@ class PostTwit {
     // Firebase Storage
     val storage = Firebase.storage
 
-    fun postTwit(twitText : String, imagePath: String, currentUser : String) {
+    // Firestore users document name
+    lateinit var docName: String
 
+    fun postTwit(twitText : String, imagePath: String, currentUser : String) {
 
 
         // Get the user name
@@ -28,10 +30,10 @@ class PostTwit {
             .addOnSuccessListener { result ->
                 for (document in result) {
                     val usedEmail = document.data["userEmail"].toString().trim()
-                    val docName = document.id
-                    Log.i("UserEmail", usedEmail)
-                    gettingUsername(currentUser, usedEmail, docName)
-
+                    docName = document.id
+                    Log.i("UserEmail Used", usedEmail)
+                    Log.i("UserEmail Used", docName)
+                    //gettingUsername(currentUser, usedEmail, docName)
 
                 }
             }
@@ -85,9 +87,11 @@ class PostTwit {
         }
     }
 
-    private fun gettingUsername(currentUser: String, usedEmail: String, docName: String) {
-
-    }
+//    private fun gettingUsername(currentUser: String, usedEmail: String, docName: String) {
+//        if(usedEmail == currentUser) {
+//
+//        }
+//    }
 
 
 }
