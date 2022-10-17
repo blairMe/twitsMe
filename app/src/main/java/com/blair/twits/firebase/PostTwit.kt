@@ -21,8 +21,10 @@ class PostTwit {
     // Firestore users document name
     lateinit var docName: String
 
-    fun postTwit(twitText : String, imagePath: String, currentUser : String) {
+    // Getting username from the firestore user details
+    lateinit var storedUsername : String
 
+    fun postTwit(twitText : String, imagePath: String, currentUser : String) {
 
         // Get the user name
         db.collection("users")
@@ -33,27 +35,23 @@ class PostTwit {
                     docName = document.id
 
                     if(usedEmail == currentUser) {
-                        Log.i("Doc Name", docName)
+                        storedUsername = document.data["setUserName"].toString().trim()
                     }
-//                    Log.i("UserEmail Used", usedEmail)
-//                    Log.i("UserEmail Used", docName)
-                    //gettingUsername(currentUser, usedEmail, docName)
-
                 }
             }
 
         // Upload the image
         val storageRef = storage.reference
 
-        var file = Uri.fromFile(File("$imagePath"))
+        val file = Uri.fromFile(File("$imagePath"))
         val profileImageRef = storageRef.child("twitPictures/${file.lastPathSegment}")
-        var uploadTask = profileImageRef.putFile(file)
+        val uploadTask = profileImageRef.putFile(file)
 
         // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener {
             // Handle unsuccessful uploads
-        }.addOnSuccessListener { _ ->
 
+        }.addOnSuccessListener { _ ->
             // Get profile picture URL
             uploadTask.continueWithTask { task ->
                 if (!task.isSuccessful) {
@@ -71,7 +69,8 @@ class PostTwit {
                     val twit = hashMapOf(
                         "twitText" to twitText,
                         "email" to currentUser,
-                        "imageUrl" to imageUri
+                        "imageUrl" to imageUri,
+                        "userName" to storedUsername
                     )
 
                     // Add a new document with a generated ID
@@ -83,19 +82,46 @@ class PostTwit {
                         .addOnFailureListener { e ->
                             Log.w("Posted Twit", "Error adding document", e)
                         }
-
                 } else {
                     Log.e("Failed URL", "Can't get the URL")
                 }
             }
         }
+
     }
 
-//    private fun gettingUsername(currentUser: String, usedEmail: String, docName: String) {
-//        if(usedEmail == currentUser) {
-//
-//        }
-//    }
+    fun postNonImageTweet(twitText : String, currentUser : String) {
+        // Get the user name
+        db.collection("users")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val usedEmail = document.data["userEmail"].toString().trim()
+                    docName = document.id
 
+                    if(usedEmail == currentUser) {
+                        storedUsername = document.data["setUserName"].toString().trim()
+
+                        // Send username and profile picture url to firestore
+                        val twit = hashMapOf(
+                            "twitText" to twitText,
+                            "email" to currentUser,
+                            "userName" to storedUsername
+                        )
+
+                        // Add a new document with a generated ID
+                        db.collection("twits")
+                            .add(twit)
+                            .addOnSuccessListener { documentReference ->
+                                Log.d("Posted Twit", "DocumentSnapshot added with ID: ${documentReference.id}")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w("Posted Twit", "Error adding document", e)
+                            }
+
+                    }
+                }
+            }
+    }
 
 }

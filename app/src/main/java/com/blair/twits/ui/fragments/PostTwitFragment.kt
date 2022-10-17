@@ -82,8 +82,15 @@ class PostTwitFragment : Fragment() {
             val twitText = binding.twitTextInput.text.toString().trim()
             val currentUserEmail = currentUser!!.email.toString()
 
-            // Posting
-            PostTwit().postTwit(twitText, imagePath, currentUserEmail)
+            if(imagePath.isNotEmpty()) {
+                // Posting
+                PostTwit().postTwit(twitText, imagePath, currentUserEmail)
+            } else {
+                //Log.i("ImagePath Empty", "Image path has nothing")
+                // Posting twits that have no image
+                PostTwit().postNonImageTweet(twitText, currentUserEmail)
+            }
+
         }
     }
 
