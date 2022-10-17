@@ -1,14 +1,14 @@
 package com.blair.twits.firebase
 
 
-import android.content.Intent
+import android.app.Activity
+import android.app.Dialog
 import android.net.Uri
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.Navigation
 import com.blair.twits.R
-import com.blair.twits.ui.activities.MainActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -24,9 +24,25 @@ class PostTwit {
     lateinit var docName: String
 
     // Getting username from the firestore user details
-    lateinit var storedUsername : String
+    lateinit var storedUsername: String
 
-    fun postTwit(twitText : String, imagePath: String, currentUser : String, view: View) {
+    // Loading dialog
+    private var progressDialog : Dialog? = null
+
+    fun postTwit(
+        twitText: String,
+        imagePath: String,
+        currentUser: String,
+        view: View,
+        requireActivity: FragmentActivity
+    ) {
+
+        // Display Please Wait dialog to post the twit
+        progressDialog = Dialog(requireActivity)
+        progressDialog?.let {
+            it.setContentView(R.layout.loader_dialog)
+            it.show()
+        }
 
         // Get the user name
         db.collection("users")
@@ -36,7 +52,7 @@ class PostTwit {
                     val usedEmail = document.data["userEmail"].toString().trim()
                     docName = document.id
 
-                    if(usedEmail == currentUser) {
+                    if (usedEmail == currentUser) {
                         storedUsername = document.data["setUserName"].toString().trim()
                     }
                 }
@@ -78,6 +94,13 @@ class PostTwit {
                     db.collection("twits")
                         .add(twit)
                         .addOnSuccessListener { _ ->
+
+                            // Dismiss dialog once twit has been successfully posted
+                            progressDialog?.let {
+                                it.dismiss()
+                            }
+
+                            // Move to Home Fragment
                             Navigation.findNavController(view)
                                 .navigate(R.id.action_postTwitFragment_to_homeFragment)
                         }
@@ -89,7 +112,15 @@ class PostTwit {
 
     }
 
-    fun postNonImageTweet(twitText : String, currentUser : String, view: View) {
+    fun postNonImageTweet(twitText: String, currentUser: String, view: View, requireActivity: FragmentActivity) {
+
+        // Display Please Wait dialog to post the twit
+        progressDialog = Dialog(requireActivity)
+        progressDialog?.let {
+            it.setContentView(R.layout.loader_dialog)
+            it.show()
+        }
+
         // Get the user name
         db.collection("users")
             .get()
@@ -98,7 +129,7 @@ class PostTwit {
                     val usedEmail = document.data["userEmail"].toString().trim()
                     docName = document.id
 
-                    if(usedEmail == currentUser) {
+                    if (usedEmail == currentUser) {
                         storedUsername = document.data["setUserName"].toString().trim()
 
                         // Send username and profile picture url to firestore
@@ -113,17 +144,17 @@ class PostTwit {
                             .add(twit)
                             .addOnSuccessListener { _ ->
 
+                                // Dismiss dialog once twit has been successfully posted
+                                progressDialog?.let {
+                                    it.dismiss()
+                                }
 
+                                // Move to Home Fragment
                                 Navigation.findNavController(view)
                                     .navigate(R.id.action_postTwitFragment_to_homeFragment)
-
-                            }
-                            .addOnFailureListener { e ->
-                                Log.w("Posted Twit", "Error adding document", e)
-                            }
+                        }
                     }
                 }
             }
     }
-
 }

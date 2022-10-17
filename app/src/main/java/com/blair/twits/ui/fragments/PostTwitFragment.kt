@@ -15,10 +15,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.navigation.Navigation
-import com.blair.twits.R
+import androidx.fragment.app.FragmentActivity
 import com.blair.twits.databinding.FragmentPostTwitBinding
 import com.blair.twits.firebase.PostTwit
 import com.google.firebase.auth.ktx.auth
@@ -70,7 +68,7 @@ class PostTwitFragment : Fragment() {
         binding.attachImg.setOnClickListener {
             val pictureDialog = AlertDialog.Builder(requireActivity())
             pictureDialog.setTitle("Select Action")
-            val pictureDialogItem = arrayOf("Select photo from Gallery", "Take picture with Camera")
+            val pictureDialogItem = arrayOf("Select photo from Gallery")
             pictureDialog.setItems(pictureDialogItem) { _, which ->
                 when(which) {
                     0 -> checkGalleryPermission()
@@ -85,15 +83,11 @@ class PostTwitFragment : Fragment() {
 
             if(imagePath.isNotEmpty()) {
                 // Posting
-                PostTwit().postTwit(twitText, imagePath, currentUserEmail, view)
+                PostTwit().postTwit(twitText, imagePath, currentUserEmail, view, requireActivity())
             } else {
-                //Log.i("ImagePath Empty", "Image path has nothing")
                 // Posting twits that have no image
+                PostTwit().postNonImageTweet(twitText, currentUserEmail, view, requireActivity())
 
-                PostTwit().postNonImageTweet(twitText, currentUserEmail, view)
-
-//                Navigation.findNavController(view)
-//                    .navigate(R.id.action_postTwitFragment_to_homeFragment)
             }
         }
     }
@@ -198,6 +192,5 @@ class PostTwitFragment : Fragment() {
         }
 
         return  file.absolutePath
-
     }
 }
