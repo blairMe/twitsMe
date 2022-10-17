@@ -31,8 +31,12 @@ class PostTwit {
                 for (document in result) {
                     val usedEmail = document.data["userEmail"].toString().trim()
                     docName = document.id
-                    Log.i("UserEmail Used", usedEmail)
-                    Log.i("UserEmail Used", docName)
+
+                    if(usedEmail == currentUser) {
+                        Log.i("Doc Name", docName)
+                    }
+//                    Log.i("UserEmail Used", usedEmail)
+//                    Log.i("UserEmail Used", docName)
                     //gettingUsername(currentUser, usedEmail, docName)
 
                 }
