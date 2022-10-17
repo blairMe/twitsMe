@@ -18,5 +18,9 @@
         android:id="@+id/postTwitFragment"
         android:name="com.blair.twits.ui.fragments.PostTwitFragment"
         android:label="Create Twit"
-        tools:layout="@layout/fragment_post_twit" />
+        tools:layout="@layout/fragment_post_twit" >
+        <action
+            android:id="@+id/action_postTwitFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

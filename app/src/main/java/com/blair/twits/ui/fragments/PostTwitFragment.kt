@@ -17,6 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.navigation.Navigation
 import com.blair.twits.R
 import com.blair.twits.databinding.FragmentPostTwitBinding
 import com.blair.twits.firebase.PostTwit
@@ -84,13 +85,16 @@ class PostTwitFragment : Fragment() {
 
             if(imagePath.isNotEmpty()) {
                 // Posting
-                PostTwit().postTwit(twitText, imagePath, currentUserEmail)
+                PostTwit().postTwit(twitText, imagePath, currentUserEmail, view)
             } else {
                 //Log.i("ImagePath Empty", "Image path has nothing")
                 // Posting twits that have no image
-                PostTwit().postNonImageTweet(twitText, currentUserEmail)
-            }
 
+                PostTwit().postNonImageTweet(twitText, currentUserEmail, view)
+
+//                Navigation.findNavController(view)
+//                    .navigate(R.id.action_postTwitFragment_to_homeFragment)
+            }
         }
     }
 

@@ -6,6 +6,8 @@ import android.net.Uri
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.navigation.Navigation
+import com.blair.twits.R
 import com.blair.twits.ui.activities.MainActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -24,7 +26,7 @@ class PostTwit {
     // Getting username from the firestore user details
     lateinit var storedUsername : String
 
-    fun postTwit(twitText : String, imagePath: String, currentUser : String) {
+    fun postTwit(twitText : String, imagePath: String, currentUser : String, view: View) {
 
         // Get the user name
         db.collection("users")
@@ -63,7 +65,6 @@ class PostTwit {
             }.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val imageUri = task.result
-                    Log.i("Your URL", "$imageUri")
 
                     // Send username and profile picture url to firestore
                     val twit = hashMapOf(
@@ -76,11 +77,9 @@ class PostTwit {
                     // Add a new document with a generated ID
                     db.collection("twits")
                         .add(twit)
-                        .addOnSuccessListener { documentReference ->
-                            Log.d("Posted Twit", "DocumentSnapshot added with ID: ${documentReference.id}")
-                        }
-                        .addOnFailureListener { e ->
-                            Log.w("Posted Twit", "Error adding document", e)
+                        .addOnSuccessListener { _ ->
+                            Navigation.findNavController(view)
+                                .navigate(R.id.action_postTwitFragment_to_homeFragment)
                         }
                 } else {
                     Log.e("Failed URL", "Can't get the URL")
@@ -90,7 +89,7 @@ class PostTwit {
 
     }
 
-    fun postNonImageTweet(twitText : String, currentUser : String) {
+    fun postNonImageTweet(twitText : String, currentUser : String, view: View) {
         // Get the user name
         db.collection("users")
             .get()
@@ -112,13 +111,16 @@ class PostTwit {
                         // Add a new document with a generated ID
                         db.collection("twits")
                             .add(twit)
-                            .addOnSuccessListener { documentReference ->
-                                Log.d("Posted Twit", "DocumentSnapshot added with ID: ${documentReference.id}")
+                            .addOnSuccessListener { _ ->
+
+
+                                Navigation.findNavController(view)
+                                    .navigate(R.id.action_postTwitFragment_to_homeFragment)
+
                             }
                             .addOnFailureListener { e ->
                                 Log.w("Posted Twit", "Error adding document", e)
                             }
-
                     }
                 }
             }
