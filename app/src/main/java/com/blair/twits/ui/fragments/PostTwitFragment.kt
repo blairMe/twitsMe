@@ -193,4 +193,6 @@ class PostTwitFragment : Fragment() {
 
         return  file.absolutePath
     }
+
+
 }
