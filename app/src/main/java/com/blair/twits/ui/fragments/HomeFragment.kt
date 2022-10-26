@@ -42,8 +42,6 @@ class HomeFragment : Fragment() {
         }
 
         getTwits()
-
-
     }
 
     fun getTwits() : ArrayList<String> {
