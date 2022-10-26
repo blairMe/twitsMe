@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.blair.twits.R
+import com.blair.twits.adapters.HomeTwitsAdapter
 import com.blair.twits.databinding.FragmentHomeBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -41,32 +43,38 @@ class HomeFragment : Fragment() {
                 .navigate(R.id.action_homeFragment_to_postTwitFragment)
         }
 
-        getTwits()
+        // Recycler View
+        binding.twitsRecylerView.layoutManager = LinearLayoutManager(requireActivity())
+        val homeTwitsAdapter = HomeTwitsAdapter(this@HomeFragment, getTwits())
+        binding.twitsRecylerView.adapter = homeTwitsAdapter
+
     }
 
     fun getTwits() : ArrayList<String> {
-        val twitNamesArray =  ArrayList<String>()
-
+        val twitArray =  ArrayList<String>()
 
         db.collection("twits")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    // Log.d("Twit data", "${document.id} => ${document.data}")
+                    Log.d("Twit data", "${document.id} => ${document.data}")
                     // Log.i("Twit data", "${document.data}")
-                    for(fileName in document.id) {
-                        twitNamesArray.add(fileName.toString())
+                    //val docName = document.id
+                    //Log.i("Document id", "$docName")
+
+                    twitArray.add(document.id)
+
+                    twitArray.forEach {
+                        Log.i("Array List", it)
                     }
+
                 }
             }
             .addOnFailureListener { exception ->
                 Log.d("Twit data", "Error getting documents: ", exception)
             }
 
-        return twitNamesArray
-
+        return twitArray
     }
-
-
 
 }

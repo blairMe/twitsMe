@@ -6,6 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.HomeFragment">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/twits_recyler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_new_twit"
@@ -19,13 +24,5 @@
             app:tint="#ffffff"
             android:src="@drawable/ic_new_twit"
             />
-
-
-
-
-
-
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
