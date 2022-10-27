@@ -24,6 +24,7 @@ class HomeTwitsAdapter(private val fragment : Fragment, private val twitsArray :
 
         Log.i("Array Items", "$twitItems")
 
+
         holder.username.text = twitItems
 
     }

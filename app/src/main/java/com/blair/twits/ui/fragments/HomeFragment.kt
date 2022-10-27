@@ -50,6 +50,8 @@ class HomeFragment : Fragment() {
 //        val homeTwitsAdapter = HomeTwitsAdapter(this@HomeFragment, getTwits())
 //        binding.twitsRecylerView.adapter = homeTwitsAdapter
 
+        getTwits()
+
     }
 
     private fun getTwits() {
