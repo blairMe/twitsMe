@@ -23,5 +23,6 @@
     <string name="user_name_placeholder">User Name</string>
     <string name="myusername_placeholder">myUserName</string>
     <string name="twit_text_placeholder">Hello</string>
+    <string name="loading_text">Loading...</string>
 
 </resources>

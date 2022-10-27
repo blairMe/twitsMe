@@ -7,12 +7,14 @@
     tools:context=".ui.fragments.HomeFragment">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/loading_text"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Loading..."
-        android:layout_margin="20dp"
+        android:text="@string/loading_text"
         android:textColor="@color/black"
-        android:layout_gravity="center_horizontal"/>
+        android:visibility="visible"
+        android:gravity="center_horizontal"
+        android:layout_margin="20dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/twits_recyler_view"
@@ -28,6 +30,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"
+        android:visibility="visible"
         app:fabSize="normal"
         app:elevation="6dp"
         app:tint="#ffffff"

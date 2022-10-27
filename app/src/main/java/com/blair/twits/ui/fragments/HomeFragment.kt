@@ -45,8 +45,6 @@ class HomeFragment : Fragment() {
                 .navigate(R.id.action_homeFragment_to_postTwitFragment)
         }
 
-
-
         getTwitsNames()
 
     }
@@ -63,13 +61,24 @@ class HomeFragment : Fragment() {
                     Log.d("Twit data", "${document.id} => ${document.data}")
 
                     twitArray.add(document.id)
-
                 }
 
-                // Recycler View
-                binding.twitsRecylerView.layoutManager = LinearLayoutManager(requireActivity())
-                val homeTwitsAdapter = HomeTwitsAdapter(this@HomeFragment, twitArray)
-                binding.twitsRecylerView.adapter = homeTwitsAdapter
+                if (twitArray.isNotEmpty()) {
+                    // Recycler View
+                    binding.twitsRecylerView.layoutManager = LinearLayoutManager(requireActivity())
+                    val homeTwitsAdapter = HomeTwitsAdapter(this@HomeFragment, twitArray)
+                    binding.twitsRecylerView.adapter = homeTwitsAdapter
+
+                    // Visibility of loading or rv
+                    binding.loadingText.visibility = View.GONE
+                    binding.twitsRecylerView.visibility = View.VISIBLE
+
+                } else {
+                    binding.loadingText.visibility = View.VISIBLE
+                    binding.twitsRecylerView.visibility = View.GONE
+                }
+
+
             }
             .addOnFailureListener { exception ->
                 Log.d("Twit data", "Error getting documents: ", exception)
