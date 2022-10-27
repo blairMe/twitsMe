@@ -25,6 +25,8 @@ class PostTwit {
 
     // Getting username from the firestore user details
     lateinit var storedUsername: String
+    lateinit var storedFirstName : String
+    lateinit var storedSecondName : String
 
     // Loading dialog
     private var progressDialog : Dialog? = null
@@ -54,6 +56,8 @@ class PostTwit {
 
                     if (usedEmail == currentUser) {
                         storedUsername = document.data["setUserName"].toString().trim()
+                        storedFirstName = document.data["firstName"].toString().trim()
+                        storedSecondName = document.data["lastName"].toString().trim()
                     }
                 }
             }
@@ -87,7 +91,9 @@ class PostTwit {
                         "twitText" to twitText,
                         "email" to currentUser,
                         "imageUrl" to imageUri,
-                        "userName" to storedUsername
+                        "userName" to storedUsername,
+                        "firstUserName" to storedFirstName,
+                        "secondUserName" to storedSecondName
                     )
 
                     // Add a new document with a generated ID
@@ -127,16 +133,22 @@ class PostTwit {
             .addOnSuccessListener { result ->
                 for (document in result) {
                     val usedEmail = document.data["userEmail"].toString().trim()
+
                     docName = document.id
 
                     if (usedEmail == currentUser) {
                         storedUsername = document.data["setUserName"].toString().trim()
+                        storedFirstName = document.data["firstName"].toString().trim()
+                        storedSecondName = document.data["lastName"].toString().trim()
 
                         // Send username and profile picture url to firestore
                         val twit = hashMapOf(
                             "twitText" to twitText,
                             "email" to currentUser,
-                            "userName" to storedUsername
+                            "imageUrl" to "",
+                            "userName" to storedUsername,
+                            "firstUserName" to storedFirstName,
+                            "secondUserName" to storedSecondName
                         )
 
                         // Add a new document with a generated ID

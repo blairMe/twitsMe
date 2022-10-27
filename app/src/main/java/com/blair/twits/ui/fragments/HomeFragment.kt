@@ -45,18 +45,11 @@ class HomeFragment : Fragment() {
                 .navigate(R.id.action_homeFragment_to_postTwitFragment)
         }
 
-        // Recycler View
-//        binding.twitsRecylerView.layoutManager = LinearLayoutManager(requireActivity())
-//        val homeTwitsAdapter = HomeTwitsAdapter(this@HomeFragment, getTwits())
-//        binding.twitsRecylerView.adapter = homeTwitsAdapter
-
-        getTwits()
+        getTwitsNames()
 
     }
 
-    private fun getTwits() {
-
-
+    private fun getTwitsNames() {
 
         db.collection("twits")
             .get()
@@ -83,13 +76,6 @@ class HomeFragment : Fragment() {
             .addOnFailureListener { exception ->
                 Log.d("Twit data", "Error getting documents: ", exception)
             }
-
-
-//            twitArray.forEach {
-//                Log.i("Array List", it)
-//            }
-//
-//        return twitArray
 
     }
 

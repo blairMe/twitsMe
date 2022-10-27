@@ -28,16 +28,16 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="3dp" />
 
-<!--            <TextView-->
-<!--                android:id="@+id/user_usernames"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:text="myUserName"-->
-<!--                android:textSize="10dp"-->
-<!--                android:layout_marginStart="5dp"-->
-<!--                android:layout_marginTop="2dp"-->
-<!--                android:layout_below="@id/user_names"/>-->
+            <TextView
+                android:id="@+id/user_usernames"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="myUserName"
+                android:textSize="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_below="@id/user_name"/>
 
 <!--            <TextView-->
 <!--                android:id="@+id/user_twit_text"-->
