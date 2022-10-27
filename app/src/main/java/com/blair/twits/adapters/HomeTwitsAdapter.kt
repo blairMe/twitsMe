@@ -18,7 +18,6 @@ import com.google.firebase.ktx.Firebase
 class HomeTwitsAdapter(private val fragment : Fragment, private val twitsArray : ArrayList<String>) :
     RecyclerView.Adapter<HomeTwitsAdapter.ViewHolder>()
 {
-
     // Firestore db
     val db = Firebase.firestore
 
@@ -36,7 +35,7 @@ class HomeTwitsAdapter(private val fragment : Fragment, private val twitsArray :
         //Log.i("Array Items", "$twitItems")
         val docRef = db.collection("twits").document(twitItems)
 
-        // Get the document, forcing the SDK to use the offline cache
+        // Get the document
         docRef.get()
             .addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -48,10 +47,6 @@ class HomeTwitsAdapter(private val fragment : Fragment, private val twitsArray :
                 val twitText = document["twitText"]
                 val twitImageLink = document["imageUrl"]
                 val userProfilePicture = document["storedProfilePicture"]
-
-
-//                Log.d("your data", "Cached document data: ${document?.data}")
-//                Log.d("your data", "$userName")
 
                 holder.username.text = "$firstUserName $secondUserName"
                 holder.uniqueUsername.text = "@$uniqueUsername"
@@ -77,8 +72,6 @@ class HomeTwitsAdapter(private val fragment : Fragment, private val twitsArray :
                 Log.d("your data", "Cached get failed: ", task.exception)
             }
         }
-
-        // holder.username.text = twitItems
 
     }
 

@@ -6,23 +6,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.HomeFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/twits_recyler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Loading..."
+        android:layout_margin="20dp"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/twits_recyler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_new_twit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginBottom="20dp"
-            android:layout_marginEnd="20dp"
-            app:fabSize="normal"
-            app:elevation="6dp"
-            app:tint="#ffffff"
-            android:src="@drawable/ic_new_twit"
-            />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_new_twit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        app:fabSize="normal"
+        app:elevation="6dp"
+        app:tint="#ffffff"
+        android:src="@drawable/ic_new_twit" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -45,6 +45,8 @@ class HomeFragment : Fragment() {
                 .navigate(R.id.action_homeFragment_to_postTwitFragment)
         }
 
+
+
         getTwitsNames()
 
     }
@@ -61,10 +63,6 @@ class HomeFragment : Fragment() {
                     Log.d("Twit data", "${document.id} => ${document.data}")
 
                     twitArray.add(document.id)
-
-//                    twitArray.forEach {
-//                        Log.i("Array List 1", it)
-//                    }
 
                 }
 

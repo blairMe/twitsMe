@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginStart="2dp"
-        android:layout_marginEnd="2dp">
+        android:layout_marginEnd="2dp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,10 +29,13 @@
                 android:id="@+id/user_profile_img"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/image_thumbnail"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="2dp"
-                android:scaleType="fitCenter" />
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="2dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/image_thumbnail" />
 
         </RelativeLayout>
 
@@ -53,7 +57,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="User Name"
+                android:textColor="@color/black"
+                android:text="@string/user_name_placeholder"
                 android:textSize="16sp"
                 android:textStyle="bold"
 
@@ -64,7 +69,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="myUserName"
+                android:textColor="@color/black"
+                android:text="@string/myusername_placeholder"
                 android:textSize="14sp"
                 android:layout_marginStart="5dp" />
 
@@ -75,7 +81,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="Its been a long time coming"
+                android:text="@string/twit_text_placeholder"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="2dp"
@@ -94,6 +101,34 @@
                 android:visibility="gone"
                 android:scaleType="fitCenter"
                 android:layout_below="@id/user_twit_text" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                android:layout_below="@id/twit_img"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/comment_icon"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/retweet_icon"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/like_unselected_icon"/>
+
+            </LinearLayout>
 
         </RelativeLayout>
 
