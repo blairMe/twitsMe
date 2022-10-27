@@ -3,19 +3,50 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="1.5dp"
-    app:cardElevation="1.5dp"
+    app:cardCornerRadius="0.2dp"
+    app:cardElevation="0.5dp"
+    android:padding="2dp"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="2dp">
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="70dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/user_profile_img"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/image_thumbnail"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="2dp"
+                android:scaleType="fitCenter" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/userNameHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="5dp"
+                android:gravity="start">
 
             <TextView
                 android:id="@+id/user_name"
@@ -23,10 +54,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="User Name"
-                android:textSize="15dp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="3dp" />
+
+                 />
 
             <TextView
                 android:id="@+id/user_usernames"
@@ -34,32 +65,39 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="myUserName"
-                android:textSize="10dp"
+                android:textSize="14sp"
+                android:layout_marginStart="5dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/user_twit_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Its been a long time coming"
+                android:textSize="16sp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="2dp"
-                android:layout_below="@id/user_name"/>
+                android:layout_marginEnd="10dp"
+                android:layout_below="@id/userNameHolder"/>
 
-<!--            <TextView-->
-<!--                android:id="@+id/user_twit_text"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:text="Its been a long time coming"-->
-<!--                android:textSize="15dp"-->
-<!--                android:layout_marginStart="5dp"-->
-<!--                android:layout_marginTop="2dp"-->
-<!--                android:layout_below="@id/user_usernames"/>-->
+            <ImageView
+                android:id="@+id/twit_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/image_thumbnail"
+                android:gravity="center_vertical"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="5dp"
+                android:visibility="gone"
+                android:scaleType="fitCenter"
+                android:layout_below="@id/user_twit_text" />
 
-<!--            <ImageView-->
-<!--                android:id="@+id/twit_img"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:src="@drawable/image_thumbnail"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:layout_marginTop="2dp"-->
-<!--                android:layout_below="@id/user_twit_text" />-->
         </RelativeLayout>
 
+        </LinearLayout>
 
     </LinearLayout>
 

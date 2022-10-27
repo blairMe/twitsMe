@@ -27,6 +27,7 @@ class PostTwit {
     lateinit var storedUsername: String
     lateinit var storedFirstName : String
     lateinit var storedSecondName : String
+    lateinit var storedProfilePictureUrl : String
 
     // Loading dialog
     private var progressDialog : Dialog? = null
@@ -58,6 +59,7 @@ class PostTwit {
                         storedUsername = document.data["setUserName"].toString().trim()
                         storedFirstName = document.data["firstName"].toString().trim()
                         storedSecondName = document.data["lastName"].toString().trim()
+                        storedProfilePictureUrl = document.data["profileImageUrl"].toString().trim()
                     }
                 }
             }
@@ -93,7 +95,8 @@ class PostTwit {
                         "imageUrl" to imageUri,
                         "userName" to storedUsername,
                         "firstUserName" to storedFirstName,
-                        "secondUserName" to storedSecondName
+                        "secondUserName" to storedSecondName,
+                        "storedProfilePicture" to storedProfilePictureUrl
                     )
 
                     // Add a new document with a generated ID
@@ -140,6 +143,7 @@ class PostTwit {
                         storedUsername = document.data["setUserName"].toString().trim()
                         storedFirstName = document.data["firstName"].toString().trim()
                         storedSecondName = document.data["lastName"].toString().trim()
+                        storedProfilePictureUrl = document.data["profileImageUrl"].toString().trim()
 
                         // Send username and profile picture url to firestore
                         val twit = hashMapOf(
@@ -148,7 +152,8 @@ class PostTwit {
                             "imageUrl" to "",
                             "userName" to storedUsername,
                             "firstUserName" to storedFirstName,
-                            "secondUserName" to storedSecondName
+                            "secondUserName" to storedSecondName,
+                            "storedProfilePicture" to storedProfilePictureUrl
                         )
 
                         // Add a new document with a generated ID

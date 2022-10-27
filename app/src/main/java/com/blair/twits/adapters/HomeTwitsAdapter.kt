@@ -3,9 +3,14 @@ package com.blair.twits.adapters
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.size.Scale
+import coil.transform.CircleCropTransformation
+import coil.transform.RoundedCornersTransformation
 import com.blair.twits.databinding.TwitItemLayoutBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -37,14 +42,37 @@ class HomeTwitsAdapter(private val fragment : Fragment, private val twitsArray :
             if (task.isSuccessful) {
                 // Document found in the offline cache
                 val document = task.result
-                val userName = document["userName"]
+                val firstUserName = document["firstUserName"]
+                val secondUserName = document["secondUserName"]
                 val uniqueUsername = document["userName"]
+                val twitText = document["twitText"]
+                val twitImageLink = document["imageUrl"]
+                val userProfilePicture = document["storedProfilePicture"]
 
-                Log.d("your data", "Cached document data: ${document?.data}")
-                Log.d("your data", "$userName")
 
-                holder.username.text = userName.toString()
-                holder.uniqueUsername.text = uniqueUsername.toString()
+//                Log.d("your data", "Cached document data: ${document?.data}")
+//                Log.d("your data", "$userName")
+
+                holder.username.text = "$firstUserName $secondUserName"
+                holder.uniqueUsername.text = "@$uniqueUsername"
+                holder.twitText.text = twitText.toString()
+
+                holder.userProfileImage.load(userProfilePicture) {
+                    crossfade(true)
+                    crossfade(200)
+                    scale(Scale.FILL)
+                    transformations(CircleCropTransformation())
+                }
+
+                if(twitImageLink.toString().isNotEmpty()) {
+                    holder.twitImage.visibility = View.VISIBLE
+                    holder.twitImage.load(twitImageLink) {
+                        crossfade(true)
+                        crossfade(200)
+                        scale(Scale.FILL)
+                        transformations(RoundedCornersTransformation(30f))
+                    }
+                }
             } else {
                 Log.d("your data", "Cached get failed: ", task.exception)
             }
@@ -62,6 +90,9 @@ class HomeTwitsAdapter(private val fragment : Fragment, private val twitsArray :
         // Defining the views
         val username = view.userName
         val uniqueUsername = view.userUsernames
+        val twitText = view.userTwitText
+        val twitImage = view.twitImg
+        val userProfileImage = view.userProfileImg
     }
 
 
