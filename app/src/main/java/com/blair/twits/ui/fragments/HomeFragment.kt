@@ -22,6 +22,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding : FragmentHomeBinding
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -44,37 +46,49 @@ class HomeFragment : Fragment() {
         }
 
         // Recycler View
-        binding.twitsRecylerView.layoutManager = LinearLayoutManager(requireActivity())
-        val homeTwitsAdapter = HomeTwitsAdapter(this@HomeFragment, getTwits())
-        binding.twitsRecylerView.adapter = homeTwitsAdapter
+//        binding.twitsRecylerView.layoutManager = LinearLayoutManager(requireActivity())
+//        val homeTwitsAdapter = HomeTwitsAdapter(this@HomeFragment, getTwits())
+//        binding.twitsRecylerView.adapter = homeTwitsAdapter
 
     }
 
-    fun getTwits() : ArrayList<String> {
-        val twitArray =  ArrayList<String>()
+    private fun getTwits() {
+
+
 
         db.collection("twits")
             .get()
             .addOnSuccessListener { result ->
+
+                val twitArray =  ArrayList<String>()
+
                 for (document in result) {
                     Log.d("Twit data", "${document.id} => ${document.data}")
-                    // Log.i("Twit data", "${document.data}")
-                    //val docName = document.id
-                    //Log.i("Document id", "$docName")
 
                     twitArray.add(document.id)
 
-                    twitArray.forEach {
-                        Log.i("Array List", it)
-                    }
+//                    twitArray.forEach {
+//                        Log.i("Array List 1", it)
+//                    }
 
                 }
+
+                // Recycler View
+                binding.twitsRecylerView.layoutManager = LinearLayoutManager(requireActivity())
+                val homeTwitsAdapter = HomeTwitsAdapter(this@HomeFragment, twitArray)
+                binding.twitsRecylerView.adapter = homeTwitsAdapter
             }
             .addOnFailureListener { exception ->
                 Log.d("Twit data", "Error getting documents: ", exception)
             }
 
-        return twitArray
+
+//            twitArray.forEach {
+//                Log.i("Array List", it)
+//            }
+//
+//        return twitArray
+
     }
 
 }

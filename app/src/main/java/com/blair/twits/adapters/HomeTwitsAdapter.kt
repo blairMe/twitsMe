@@ -24,7 +24,8 @@ class HomeTwitsAdapter(private val fragment : Fragment, private val twitsArray :
 
         Log.i("Array Items", "$twitItems")
 
-        holder.userName.text = twitItems
+        holder.username.text = twitItems
+
     }
 
     override fun getItemCount(): Int {
@@ -33,7 +34,7 @@ class HomeTwitsAdapter(private val fragment : Fragment, private val twitsArray :
 
     class ViewHolder(view : TwitItemLayoutBinding) : RecyclerView.ViewHolder(view.root) {
         // Defining the views
-        val userName = view.userName
+        val username = view.userName
     }
 
 }
