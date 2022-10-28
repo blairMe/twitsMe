@@ -47,6 +47,7 @@ class HomeFragment : Fragment() {
 
         getTwitsNames()
 
+
     }
 
     private fun getTwitsNames() {

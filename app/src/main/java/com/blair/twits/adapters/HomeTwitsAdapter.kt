@@ -5,12 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.size.Scale
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
+import com.blair.twits.R
 import com.blair.twits.databinding.TwitItemLayoutBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -73,6 +75,10 @@ class HomeTwitsAdapter(private val fragment : Fragment, private val twitsArray :
             }
         }
 
+        holder.btnLikeContainer.setOnClickListener {
+            holder.btnLike.setImageDrawable(ContextCompat.getDrawable(fragment.requireContext(),
+                R.drawable.like_selected_icon))
+        }
     }
 
     override fun getItemCount(): Int {
@@ -86,7 +92,10 @@ class HomeTwitsAdapter(private val fragment : Fragment, private val twitsArray :
         val twitText = view.userTwitText
         val twitImage = view.twitImg
         val userProfileImage = view.userProfileImg
+        val btnLikeContainer = view.twitLikeContainer
+        val btnLike = view.twitLike
     }
+
 
 
 }

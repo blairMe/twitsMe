@@ -122,11 +122,19 @@
                     android:layout_weight="1"
                     android:src="@drawable/retweet_icon"/>
 
+                <LinearLayout
+                    android:id="@+id/twit_like_container"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1">
+
                 <ImageView
+                    android:id="@+id/twit_like"
                     android:layout_width="wrap_content"
                     android:layout_height="15dp"
-                    android:layout_weight="1"
                     android:src="@drawable/like_unselected_icon"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
