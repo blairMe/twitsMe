@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.size.Scale
@@ -75,9 +76,20 @@ class HomeTwitsAdapter(private val fragment : Fragment, private val twitsArray :
             }
         }
 
-        holder.btnLikeContainer.setOnClickListener {
-            holder.btnLike.setImageDrawable(ContextCompat.getDrawable(fragment.requireContext(),
-                R.drawable.like_selected_icon))
+
+        var trueFalse = false
+        holder.btnLike.setOnClickListener {
+
+            //trueFalse = true
+            if (!trueFalse) {
+                holder.btnLike.setImageDrawable(ContextCompat.getDrawable(fragment.requireContext(),
+                    R.drawable.like_selected_icon))
+                trueFalse = true
+            } else if (trueFalse) {
+                holder.btnLike.setImageDrawable(ContextCompat.getDrawable(fragment.requireContext(),
+                    R.drawable.like_unselected_icon))
+                trueFalse = false
+            }
         }
     }
 
