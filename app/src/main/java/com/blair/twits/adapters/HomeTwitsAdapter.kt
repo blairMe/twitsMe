@@ -38,8 +38,6 @@ class HomeTwitsAdapter(private val fragment : Fragment, private val twitsArray :
         //Log.i("Array Items", "$twitItems")
         val docRef = db.collection("twits").document(twitItems)
 
-        Log.i("The Items", "$twitItems")
-
         // Get the document
         docRef.get()
             .addOnCompleteListener { task ->
